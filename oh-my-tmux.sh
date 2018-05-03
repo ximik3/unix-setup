@@ -4,8 +4,8 @@
 git clone https://github.com/gpakosz/.tmux.git
 if [ -d ~/.tmux ]; then
   rm -rf ~/.tmux
-  mv .tmux ~/.tmux
 fi
+mv .tmux ~/.tmux
 rm -rf .tmux
 
 # Backup original .tmux.conf if exist
