@@ -15,7 +15,11 @@ ZSH_THEME="random"
 # cause zsh load theme from this variable instead of
 # looking in ~/.oh-my-zsh/themes/
 # An empty array have no effect
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" "essembeh" )
+# ZSH_THEME_RANDOM_CANDIDATES=(
+#   "robbyrussell" "agnoster" "essembeh" "af-magic" "takashiyoshida"
+#   "linuxonly" "amuze" "murilasso" "peepcode" "refined" "mh"
+#   "terminalparty" "cloud" "dstufft"
+# )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -61,11 +65,20 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
+  fasd
+  thefuck
+  alias-tips
+#  shrink-path
 )
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+
+# Source .profile if exist
+if [ -f "$HOME/.profile" ]; then
+    source "$HOME/.profile"
+fi
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -93,3 +106,57 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Aliases
+alias -g G='|& rg -i -e '
+alias -g AG='alias | rg '
+alias v='f -e vim'
+alias vi='vim'
+alias zreload='exec zsh'
+alias md='mkdir -p'
+alias wshare='python3 -m http.server'
+alias x='exit'
+alias rm='trash'
+
+# OS specific aliases
+if [ $(uname -s) = "Linux" ]; then
+  alias -s html=firefox
+  alias -s pdf=nautilus
+fi
+
+if [ $(uname -s) = "Darwin" ]; then
+  alias -s html=open
+  alias -s pdf=open
+fi
+
+# Functions
+# Add sudo before command with alt+s
+function prepend-sudo() {
+  [[ -z $BUFFER ]] && zle up-history
+  if [[ $BUFFER == sudo\ * ]]; then
+    LBUFFER="${LBUFFER#sudo }"
+  else
+    LBUFFER="sudo $LBUFFER"
+  fi
+}
+zle -N prepend-sudo
+bindkey "^[s" prepend-sudo
+# Expand global aliases with space
+function globalias() {
+   if [[ ${LBUFFER} =~ ' [A-Z0-9]+$' ]]; then
+     zle _expand_alias
+     zle expand-word
+   fi
+   zle self-insert
+}
+zle -N globalias
+bindkey " " globalias
+
+# Additional settings
+# Disable annoing autocomplete
+unsetopt correct_all
+
+# Added by addons
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -x /usr/games/cowsay -a -x /usr/games/fortune -a -x /usr/games/lolcat ] && \
+  fortune | cowsay -f `ls /usr/share/cowsay/cows/ | shuf -n 1` | lolcat
