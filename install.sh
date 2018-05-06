@@ -8,6 +8,7 @@
 # Here you can define what is gonna be installed:
 CANDIDATES=(
 #> ---- System wide tools ----
+git
 curl
 wget
 unzip

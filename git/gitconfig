@@ -1,0 +1,11 @@
+[user]
+	email = kyxap@ukr.net
+	name = Volodymyr Koukhar
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+	br = branch
+	cm = commit -a -m
+[push]
+	default = simple
