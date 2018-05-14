@@ -13,7 +13,7 @@ curl
 wget
 unzip
 clipboard-cli
-#python3
+pip3
 
 #> ---- CLI Tools ----
 fonts-powerline
@@ -25,7 +25,7 @@ fasd
 fzf
 ripgrep
 trash-cli
-#thefuck
+thefuck
 lolcat
 vim
 vim_by_default
