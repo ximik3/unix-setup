@@ -14,6 +14,7 @@ wget
 unzip
 clipboard-cli
 pip3
+nodejs10
 
 #> ---- CLI Tools ----
 fonts-powerline
