@@ -15,6 +15,7 @@ unzip
 clipboard-cli
 pip3
 nodejs10
+gradle47
 
 #> ---- CLI Tools ----
 fonts-powerline
