@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Basic Linux/Darwin deduction translated to Debian/Darwin
+
+case "$(uname -s)" in
+    Linux*)     PLATFORM=Debian;;
+    Darwin*)    PLATFORM=Darwin;;
+esac

@@ -1,6 +1,18 @@
 #!/bin/bash
 
-sudo apt-get install git -y
+source platform
+
+case $PLATFORM in
+  Debian*)
+    sudo apt-get install git -y
+    ;;
+   
+  Darwin*)
+    brew install git
+    ;;
+    
+esac
+
 
 if [ ! -d ~/.dotfiles ]; then
   mkdir -p ~/.dotfiles

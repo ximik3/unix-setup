@@ -7,32 +7,35 @@
 
 # Here you can define what is gonna be installed:
 CANDIDATES=(
+#> ---- Pre-insallation scripts ----
+preinstall
+
 #> ---- System wide tools ----
 git
-curl
-wget
-unzip
-clipboard-cli
-pip3
-nodejs10
-gradle47
+#curl
+#wget
+#unzip
+#clipboard-cli
+#pip3
+#nodejs10
+#gradle47
 
 #> ---- CLI Tools ----
-fonts-powerline
-zsh
-oh-my-zsh
-zsh-alias-tips
-   # zsh_by_default > requires password input
-fasd
-fzf
-ripgrep
-trash-cli
-thefuck
-lolcat
-vim
-vim_by_default
-tmux
-oh-my-tmux
+#fonts-powerline
+#zsh
+#oh-my-zsh
+#zsh-alias-tips
+   # zsh-by-default > requires password input
+#fasd
+#fzf
+#ripgrep
+#trash-cli
+#thefuck
+#lolcat
+#vim
+#vim-by-default
+#tmux
+#oh-my-tmux
 
 )
 
@@ -55,12 +58,13 @@ done
 sudo echo "Password prompted!"
 
 # Installation process
+PLATFORM=$(uname -s)
 NOT_INSTALLED=()
 for PACKAGE in ${CANDIDATES[@]}
 do
   echo
   log_info "Installing ${BOLD}${PACKAGE}${NORMAL}..."
-  bash "${PACKAGE}.sh"
+  bash "${PACKAGE}.sh" || bash "${PACKAGE}_${PLATFORM}.sh"
   if [ $? -eq 0 ]; then
     log_success "Package ${BOLD}${PACKAGE}${NORMAL} successfully installed"
   else
