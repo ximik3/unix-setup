@@ -1,0 +1,61 @@
+#!/bin/bash
+
+echo_last_by () {
+  local SEP="$1"; shift
+  local ARGS="$@"
+  local STR=$( IFS=$' '; echo ${ARGS[@]})
+  echo "$STR" | tr "$SEP" '\n' | tail -n 1
+}
+
+setup_dotfile () {
+  local DF_SETUP="$1"
+  local DF_NAME=$(echo_last_by '/' $DF_SETUP)
+  local DF_LINK="$HOME/.$DF_NAME"
+  local DF_DEST="$HOME/.dotfiles/$DF_NAME"
+
+  # Check .dotfiles folder existence
+  if [ ! -d ~/.dotfiles ]; then
+    echo "~/.dotfiles directory not found. Creating one."
+    mkdir -p ~/.dotfiles
+  fi
+  # Backup .dotfiles config if found
+  if [ -f $DF_DEST ]; then
+    cp -f $DF_DEST "${DF_DEST}.old"
+  fi
+  # If no config found
+  if [ ! -L $DF_LINK -a ! -f $DF_LINK ]; then
+    echo "Setting up configuration file ~/.${DF_NAME}"
+    cp $DF_SETUP $DF_DEST
+    ln -sf $DF_DEST $DF_LINK
+  # If config file found in ~
+  elif [ ! -L $DF_LINK -a -f $DF_LINK ]; then
+    echo "Found existing .${DF_NAME} file. Moving to ~/.dotfiles and linking"
+    mv $DF_LINK $DF_DEST
+    ln -s $DF_DEST $DF_LINK
+  # Config link found
+  elif [ -L $DF_LINK ]; then
+    local DF_LINK_STAT=`ls -l $DF_LINK`
+    local DF_LINKED_TO=$(echo_last_by ' ' "$DF_LINK_STAT")
+    # Check if it points to existing file
+    if [ ! -f $DF_LINKED_TO ]; then
+      echo "Setting up configuration file ~/.${DF_NAME}"
+      cp $DF_SETUP $DF_DEST
+      ln -sf $DF_DEST $DF_LINK
+    # Maybe some other file in a system
+    elif [ $DF_LINKED_TO != $DF_DEST ]; then
+      echo "Found existing configuration in $DF_LINKED_TO"
+      echo "Backing up original link to ${DF_LINK}.old"
+      echo "Copying existing config to ~/.dotfiles and linking"
+      cp $DF_LINKED_TO $DF_DEST
+      mv -f $DF_LINK "${DF_LINK}.old"
+      ln -s $DF_DEST $DF_LINK
+    # Link points to existing .dotfiles config
+    elif [ -f $DF_DEST ]; then
+      echo "Using existing ~/.dotfiles/$DF_NAME configuration."
+      # Remove backup
+      if [ -f "${DF_LINKED_TO}.old" ]; then
+        rm "${DF_LINKED_TO}.old"
+      fi
+    fi
+  fi
+}
