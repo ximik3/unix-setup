@@ -9,7 +9,10 @@ case $PLATFORM in
     ;;
 
   Darwin*)
-    brew install curl
+    # brew install curl
+    # echo 'export PATH="/usr/local/opt/curl/bin:$PATH"' >> ~/.profile
+    # CURL is preinstalled with XCode Tools
+    log_info "Skipping curl for MacOS due it's already installed"
     ;;
 
   *)
