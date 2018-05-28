@@ -13,12 +13,13 @@ CANDIDATES=(
 #> ---- System wide tools ----
   git
   curl
-#wget
-#unzip
-#clipboard-cli
-#pip3
-#nodejs10
-#gradle47
+  wget
+  unzip
+  clipboard-cli
+  pip3
+  nodejs10
+  java8
+  gradle47
 
 #> ---- CLI Tools ----
 #fonts-powerline
