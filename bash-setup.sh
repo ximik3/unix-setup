@@ -11,7 +11,7 @@ if [ "$PLATFORM" = "Darwin" ]; then
   fi
   if [ ! -f ~/.bashrc ]; then
     echo 'Linking ~/.bashrc to ~/.bash_profile'
-    ln -s ~/.bashrc ~/.bash_profile
+    ln -s ~/.bash_profile ~/.bashrc
   fi
 fi
 touch profile
