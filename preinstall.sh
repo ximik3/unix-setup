@@ -6,14 +6,6 @@ source prettyecho
 source dots
 
 # Pre-installation scripts
-# General
-touch profile
-setup_dotfile profile
-rm profile
-if [[ -z $(grep '.profile' ~/.bashrc) ]]; then
-  echo 'source ~/.profile' >> ~/.bashrc
-fi
-
 # Platform specific
 case $PLATFORM in
   Debian*)

@@ -9,6 +9,7 @@
 CANDIDATES=(
 #> ---- Pre-insallation scripts ----
   preinstall
+  bash-setup
 
 #> ---- System wide tools ----
   git
