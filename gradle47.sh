@@ -31,10 +31,14 @@ esac
 # .profile should remain platform independent
 if [[ -z $(grep 'GRADLE_HOME' ~/.profile) ]]; then
   echo 'case $(uname -s) in' >> ~/.profile
-  echo '  Linux*) GRADLE_HOME=/opt/gradle/gradle-4.7/bin ;;' >> ~/.profile
-  echo '  Darwin*) GRADLE_HOME="" ;;' >> ~/.profile
+  echo '  Linux*)' >> ~/.profile
+  echo '    GRADLE_HOME=/opt/gradle/gradle-4.7/bin' >> ~/.profile
+  echo '    PATH=$PATH:$GRADLE_HOME' >> ~/.profile
+  echo '    ;;' >> ~/.profile
+  echo '  Darwin*)' >> ~/.profile
+  echo '    GRADLE_HOME=/usr/local/Cellar/gradle/4.7/bin' >> ~/.profile
+  echo '    ;;' >> ~/.profile
   echo 'esac' >> ~/.profile
-  echo 'PATH=$PATH:$GRADLE_HOME' >> ~/.profile
 fi
 
 
