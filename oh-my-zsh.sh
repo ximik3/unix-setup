@@ -10,10 +10,17 @@ if [ ! $CHECK_ZSH_INSTALLED -ge 1 ]; then
 fi
 unset CHECK_ZSH_INSTALLED
 
+# Check existing oh-my-zsh install
+if [ ! -d ~/.oh-my-zsh ]; then
+  log_info "Oh-My-Zsh already installed. Skipping..."
+  exit 0
+fi
+
 # Clone from GitHub
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 
 # Backup .zshrc
+
 printf "${BLUE}Looking for an existing ~/.dotfiles zsh config...${NORMAL}\n"
 if [ -f ~/.dotfiles/zshrc ] || [ -h ~/.dotfiles/zshrc ]; then
   printf "${YELLOW}Found ~/.dotfiles/zshrc.${NORMAL} ${GREEN}Backing up to ~/.dotfiles/zshrc.pre-oh-my-zsh${NORMAL}\n";

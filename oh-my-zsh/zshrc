@@ -108,15 +108,18 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Aliases
+alias ag='alias | grep '
 alias -g G='|& rg -i -e '
-alias -g AG='alias | rg '
+alias -g TF='&& echo True || echo False'
 alias v='f -e vim'
 alias vi='vim'
-alias zreload='exec zsh'
+alias re.='source ~/.zshrc'
 alias md='mkdir -p'
 alias wshare='python3 -m http.server'
 alias x='exit'
 alias rm='trash'
+alias fu='fuck'
+alias mci='mvn clean install'
 
 # OS specific aliases
 if [ $(uname -s) = "Linux" ]; then

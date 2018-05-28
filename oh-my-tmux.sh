@@ -1,12 +1,16 @@
 #!/bin/bash
 
-# Clone from git
-git clone https://github.com/gpakosz/.tmux.git
+source prettyecho
+source dots
+
+# Check existing install
 if [ -d ~/.tmux ]; then
-  rm -rf ~/.tmux
+  log_info 'Found existing .oh-my-tmux installation. Skipping...'
+  exit 0
 fi
-mv .tmux ~/.tmux
-rm -rf .tmux
+
+# Clone from git
+git clone https://github.com/gpakosz/.tmux.git ~/.tmux
 
 # Backup original .tmux.conf if exist
 if [ -f ~/.tmux.conf ]; then
@@ -15,17 +19,6 @@ fi
 
 # Link oh-my-tmux conf
 ln -s -f ~/.tmux/.tmux.conf ~/.tmux.conf
-cp ~/.tmux/.tmux.conf.local ~
 
-# Replace with custom config if present
-if [ ! -d ~/.dotfiles ]; then
-  mkdir -p ~/.dotfiles
-fi
-if [ ! -f ~/.dodfiles/tmux.conf.local -a -f oh-my-tmux/tmux.conf.local ]; then
-  cp oh-my-tmux/tmux.conf.local ~/.dotfiles/
-  ln -s -f ~/.dotfiles/tmux.conf.local ~/.tmux.conf.local
-fi
-
-
-
-
+# Setup custom config file
+setup_dotfile oh-my-tmux/tmux.conf.local

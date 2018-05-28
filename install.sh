@@ -23,21 +23,21 @@ CANDIDATES=(
   gradle47
 
 #> ---- CLI Tools ----
-#fonts-powerline
-#zsh
-#oh-my-zsh
-#zsh-alias-tips
+  fonts-powerline
+  zsh
+  oh-my-zsh
+  zsh-alias-tips
    # zsh-by-default > requires password input
-#fasd
-#fzf
-#ripgrep
-#trash-cli
-#thefuck
-#lolcat
-#vim
-#vim-by-default
-#tmux
-#oh-my-tmux
+  fasd
+  fzf
+  ripgrep
+  trash-cli
+  thefuck
+  lolcat
+  vim
+  vim-by-default
+  tmux
+  oh-my-tmux
 
 )
 

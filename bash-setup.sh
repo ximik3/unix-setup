@@ -14,9 +14,7 @@ if [ "$PLATFORM" = "Darwin" ]; then
     ln -s ~/.bash_profile ~/.bashrc
   fi
 fi
-touch profile
-setup_dotfile profile
-rm profile
+setup_dotfile bash/profile
 if [[ -z $(grep 'source ~/.profile' ~/.bashrc) ]]; then
   echo '# Source ~/.profile if exists' >> ~/.bashrc
   echo 'if [ -f ~/.profile ]; then' >> ~/.bashrc

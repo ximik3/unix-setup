@@ -1,5 +1,4 @@
 "
-"
 "  VIM settings
 "  @maintainer: Volodymyr Koukhar (kyxap@ukr.net)
 "
@@ -12,7 +11,7 @@ endif
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
-" allow backspacing over everything in insert mode
+" Allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
 set nobackup		" keep a backup file (restore to previous version)
@@ -22,9 +21,11 @@ set showcmd		" display incomplete commands
 set incsearch		" do incremental searching    	:set is
 set hlsearch		" do highlight search results 	:set hls
 set ic			" ignore case in search by default
-"set cursorline 		" show a visual line under the cursor's current line
 
-"Don't use Ex mode, use Q for formatting
+" Show possibilities hint by pressing <Tab>
+set wildchar=<Tab> wildmenu wildmode=full
+
+" Don't use Ex mode, use Q for formatting
 map Q gq
 
 " In many terminal emulators the mouse works just fine, thus enable it.
@@ -99,7 +100,12 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " https://github.com/tomtom/tcomment_vim
-Plug 'tomtom/tcomment_vim' " gcc, Ctrl+// - toggle comments for line
+Plug 'tomtom/tcomment_vim' 		" gcc, Ctrl+// - toggle comments for line
+
+" https://github.com/junegunn/fzf
+Plug '~/.fzf'				" fuzzy-finder
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " if not
+" installed yet
 
 " https://github.com/bling/vim-airline
 Plug 'vim-airline/vim-airline'		" bottom status panel
@@ -121,7 +127,7 @@ Plug 'myusuf3/numbers.vim'		" relative numbers
 Plug 'flazz/vim-colorschemes'		" additional colorschemes
 
 " https://github.com/majutsushi/tagbar
-Plug 'majutsushi/tagbar'	 	" class/module browser
+Plug 'majutsushi/tagbar'	 	" class/module tags browser
 
 " https://github.com/scrooloose/nerdtree
 Plug 'scrooloose/nerdtree'		" filetree
@@ -168,6 +174,10 @@ call plug#end()
   let g:airline#extensions#branch#enabled = 1
   let g:airline#extensions#tabline#enabled = 1
 
+" FZF plugin
+  let g:fzf_history_dir = '~/.local/share/fzf-history'
+  nnoremap <C-R> :FZF<CR>
+
 " Over-Vim plugin
   let g:over_enable_auto_nohlsearch = 1
   let g:over_command_line_prompt = " "
@@ -175,20 +185,20 @@ call plug#end()
   nnoremap ; :OverCommandLine<CR>
 
 " Numbers plugin
-  nnoremap <F3> :NumbersToggle<CR> 
+  nnoremap <F3> :NumbersToggle<CR>
   nnoremap <F4> :NumbersOnOff<CR>
   let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
 
 " Tagbar plugin
-  map <F5> :TagbarToggle<cr>
-  let g:tagbar_autofocus = 0 " autofocus on Tagbar open
+  map <F5> :TagbarToggle<CR>
+  let g:tagbar_autofocus = 1 " autofocus on Tagbar open
 
 " NerdTree plugin
   autocmd StdinReadPre * let s:std_in=1
   autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
 " Colorscheme Switcher
-  " Cool ones: [ 'vividchalc', 'beekai' ]
+  " Cool ones: [ 'vividchalc', 'beekai', 'seoul256' 'MountainDew' 'carvedwood' ]
   let g:colorscheme_switcher_exclude = ['default', 'test']
 "colorscheme molokai
 

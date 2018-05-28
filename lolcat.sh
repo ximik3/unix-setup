@@ -1,8 +1,23 @@
 #!/bin/bash
 
-sudo apt-get install fortune -y
-sudo apt-get install cowsay -y
-sudo apt-get install lolcat -y
+source platform
+source prettyecho
+
+case $PLATFORM in
+  Debian*)
+    sudo apt-get install -y fortune cowsay lolcat
+    ;;
+
+  Darwin*)
+    brew install fortune cowsay lolcat
+    ;;
+
+  *)
+    log_error "Platform not supported"
+    exit 1
+    ;;
+
+esac
 
 if [[ -z $(grep lolcat ~/.bashrc) ]]; then
   echo '[ -x /usr/games/cowsay -a -x /usr/games/fortune -a -x /usr/games/lolcat ] && \

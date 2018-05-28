@@ -1,10 +1,23 @@
 #!/bin/bash
 
-sudo apt-get install tmux -y
-if [ ! -d ~/.dotfiles ]; then
-  mkdir -p ~/.dotfiles
-fi
-if [ ! -f ~/.tmux.conf -a -f tmux/tmux.conf ]; then
-  cp tmux/tmux.conf ~/.dotfiles/
-  ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
-fi
+source platform
+source prettyecho
+source dots
+
+case $PLATFORM in
+  Debian*)
+    sudo apt-get install tmux -y
+    ;;
+
+  Darwin*)
+    brew install tmux
+    ;;
+
+  *)
+    log_error "Platform not supported"
+    exit 1
+    ;;
+
+esac
+
+setup_dotfile tmux/tmux.conf
