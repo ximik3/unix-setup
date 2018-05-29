@@ -14,6 +14,10 @@ if [ "$PLATFORM" = "Darwin" ]; then
     ln -s ~/.bash_profile ~/.bashrc
   fi
 fi
+if [ -f ~/.profile ]; then
+  echo 'Backing up original .profile -> .profile.old'
+  mv ~/.profile ~/.profile.old
+fi
 setup_dotfile bash/profile
 if [[ -z $(grep 'source ~/.profile' ~/.bashrc) ]]; then
   echo '# Source ~/.profile if exists' >> ~/.bashrc
