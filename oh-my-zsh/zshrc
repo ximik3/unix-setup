@@ -123,6 +123,7 @@ alias mci='mvn clean install'
 
 # OS specific aliases
 if [ $(uname -s) = "Linux" ]; then
+  alias sai='sudo apt-get -y install'
   alias -s html=firefox
   alias -s pdf=nautilus
 fi
