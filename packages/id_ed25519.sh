@@ -27,15 +27,19 @@ install() {
     if [ -e ~/.ssh/config ] && grep '.ssh/id_ed25519' ~/.ssh/config &>/dev/null; then
       log_warning "~/.ssh/config already mentions ~/.ssh/id_ed25519 key, skipping!"
     else
-      log_info "Adding GitHub configuration to ~/.ssh/config"
+      log_info "Adding GitHub and GitLab configurations to ~/.ssh/config"
       cat >>~/.ssh/config <<EOL
 
 Host github.com
   AddKeysToAgent yes
   IdentityFile ~/.ssh/id_ed25519
+
+Host gitlab.com
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_ed25519
 EOL
-      log_warning "Now you need to add public key $(bold ~/.ssh/id_ed25519) to your GitHub account"
-      log_warning "Run $(bold 'pbcopy < ~/.ssh/id_ed25519.pub') and paste it to GitHub Setting"
+      log_warning "Now you need to add public key $(bold ~/.ssh/id_ed25519) to your GitHub or GitLab accounts"
+      log_warning "Run $(bold 'pbcopy < ~/.ssh/id_ed25519.pub') and paste it to GitHub or GitLab SSH Keys page"
     fi
   fi
 }

@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# The name of a package to be installed
+PACKAGE_NAME="powerline-fonts"
+
 # A list of configuration files that should be liked with .dotfiles repo
-CONFIGURATION_FILES=(~/.gitconfig)
+CONFIGURATION_FILES=()
 
 # Imports
 source src/prettyecho
@@ -9,32 +12,27 @@ source src/prettyecho
 # A check of whether the current package is already installed in a system
 # Expected to succeed if a package is installed of fails otherwise
 already_installed() {
-  [ -e ~/.gitconfig ]
+  ls ~/Library/Fonts/*Powerline* &>/dev/null
 }
 
 # An installation process must be implemented here
 install() {
-  if already_installed; then
-    log_error "$(bold ~/.gitconfig) is already present!"
-    exit 1
-  else
-    read -rp "Enter git config user.name: " USERNAME
-    read -rp "Enter git config user.email: " USEREMAIL
-    log_info "Creating $(bold ~/.gitconfig) ..."
-    cat > ~/.gitconfig << EOL
-[user]
-        name = $USERNAME
-        email = $USEREMAIL
-[pull]
-        rebase = false
-EOL
-  fi
+  log_info "Installing $(bold $PACKAGE_NAME) ..."
+  git clone https://github.com/powerline/fonts.git --depth=1 powerline_fonts &&
+    cd powerline_fonts &&
+    ./install.sh &&
+    cd .. &&
+    rm -rf powerline_fonts
 }
 
 # An uninstallation process should be implemented here
 uninstall() {
-   log_info "Deleting $(bold ~/.gitconfig) ..."
-   rm -rf ~/.gitconfig
+  log_info "Uninstalling $(bold $PACKAGE_NAME) ..."
+  git clone https://github.com/powerline/fonts.git --depth=1 powerline_fonts &&
+    cd powerline_fonts &&
+    ./uninstall.sh &&
+    cd .. &&
+    rm -rf powerline_fonts
 }
 
 # Returns a list of configuration files that should be liked with .dotfiles repo

@@ -10,7 +10,13 @@ source src/prettyecho
 source src/dotfiles
 
 CANDIDATES=(
+  id_ed25519
   gitconfig
+  powerline-fonts
+  oh-my-zsh
+  oh-my-tmux
+  vimrc
+  jenv
 )
 
 SKIPPED=()
