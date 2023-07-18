@@ -1,0 +1,208 @@
+"
+"  VIM settings
+"  @maintainer: Volodymyr Kukhar (ximiksk8er@gmail.com)
+"
+
+" When started as "evim", evim.vim will already have done these settings.
+if v:progname =~? "evim"
+  finish
+endif
+
+" This must be first, because it changes other options as a side effect.
+set nocompatible
+
+" Allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+set nobackup		" keep a backup file (restore to previous version)
+set noundofile		" keep an undo file (undo changes after closing)
+set ruler		" show the cursor position all the time
+set showcmd		" display incomplete commands
+set incsearch		" do incremental searching    	:set is
+set hlsearch		" do highlight search results 	:set hls
+set ic			" ignore case in search by default
+
+" Show possibilities hint by pressing <Tab>
+set wildchar=<Tab> wildmenu wildmode=full
+
+" Don't use Ex mode, use Q for formatting
+map Q gq
+
+" In many terminal emulators the mouse works just fine, thus enable it.
+if has('mouse')
+  set mouse=a
+endif
+
+" Switch syntax highlighting on, when the terminal has colors
+if &t_Co > 2 || has("gui_running")
+  syntax on
+endif
+
+" Only do this part when compiled with support for autocommands.
+if has("autocmd")
+
+  " Enable file type detection.
+  filetype plugin indent on
+
+  " Put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+  au!
+
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+    \ if line("'\"") >= 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+
+  augroup END
+
+else
+
+  set autoindent		" always set autoindenting on
+
+endif " has("autocmd")
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+		  \ | wincmd p | diffthis
+endif
+
+if has('langmap') && exists('+langnoremap')
+  " Prevent that the langmap option applies to characters that result from a
+  " mapping.  If unset (default), this may break plugins (but it's backward
+  " compatible).
+  set langnoremap
+endif
+
+
+" Add optional packages.
+"
+" The matchit plugin makes the % command work better, but it is not backwards
+" compatible.
+packadd matchit
+
+" Download Vim-Plug if it is not installed yet
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
+" Plugins ...
+call plug#begin('~/.vim/plugged')
+
+" https://github.com/tomtom/tcomment_vim
+Plug 'tomtom/tcomment_vim' 		" gcc, Ctrl+// - toggle comments for line
+
+" https://github.com/junegunn/fzf
+Plug '~/.fzf'				" fuzzy-finder
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " if not
+" installed yet
+
+" https://github.com/bling/vim-airline
+Plug 'vim-airline/vim-airline'		" bottom status panel
+Plug 'vim-airline/vim-airline-themes'
+
+" https://github.com/osyo-manga/vim-over
+Plug 'osyo-manga/vim-over'		" %s/o/n visualization + : replacement
+
+" https://github.com/bronson/vim-trailing-whitespace
+Plug 'bronson/vim-trailing-whitespace'	" trailing spaces highlight
+
+" https://github.com/tpope/vim-surround
+Plug 'tpope/vim-surround'		" fancy braces wrapper tool
+
+" http://myusuf3.github.com/numbers.vim
+Plug 'myusuf3/numbers.vim'		" relative numbers
+
+" https://github.com/flazz/vim-colorschemes
+Plug 'flazz/vim-colorschemes'		" additional colorschemes
+
+" https://github.com/majutsushi/tagbar
+Plug 'majutsushi/tagbar'	 	" class/module tags browser
+
+" https://github.com/scrooloose/nerdtree
+Plug 'scrooloose/nerdtree'		" filetree
+
+" https://github.com/derekwyatt/vim-scala
+Plug 'derekwyatt/vim-scala'		" scala support
+
+" https://github.com/xolox/vim-colorscheme-switcher
+Plug 'xolox/vim-misc'			" required dependency
+Plug 'xolox/vim-colorscheme-switcher'	" name says by itself
+
+" https://vimawesome.com/plugin/vim-thematic
+Plug 'reedes/vim-thematic'		" themes for vim
+
+
+" Initialize plugin system
+call plug#end()
+
+" Plugins setup
+" Airline symbols see :help airline-customization
+  if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+  endif
+
+  " unicode symbols
+  let g:airline_symbols.crypt = '🔒'
+  " let g:airline_symbols.linenr = '☰'
+  let g:airline_symbols.paste = 'ρ'
+  let g:airline_symbols.spell = 'Ꞩ'
+  let g:airline_symbols.notexists = '∄'
+  " let g:airline_symbols.whitespace = 'Ξ'
+
+  " powerline symbols
+  let g:airline_left_sep = ''
+  let g:airline_left_alt_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline_right_alt_sep = ''
+  let g:airline_symbols.branch = ''
+  let g:airline_symbols.readonly = ''
+  let g:airline_symbols.linenr = '☰'
+  let g:airline_symbols.maxlinenr = ''
+
+  let g:airline#extensions#syntastic#enabled = 1
+  let g:airline#extensions#branch#enabled = 1
+  let g:airline#extensions#tabline#enabled = 1
+
+" FZF plugin
+  let g:fzf_history_dir = '~/.local/share/fzf-history'
+  nnoremap <C-R> :FZF<CR>
+
+" Over-Vim plugin
+  let g:over_enable_auto_nohlsearch = 1
+  let g:over_command_line_prompt = " "
+  " map ; work similar to :
+  nnoremap ; :OverCommandLine<CR>
+
+" Numbers plugin
+  nnoremap <F3> :NumbersToggle<CR>
+  nnoremap <F4> :NumbersOnOff<CR>
+  let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
+
+" Tagbar plugin
+  map <F5> :TagbarToggle<CR>
+  let g:tagbar_autofocus = 1 " autofocus on Tagbar open
+
+" NerdTree plugin
+  autocmd StdinReadPre * let s:std_in=1
+  autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+" Colorscheme Switcher
+  " Cool ones: [ 'vividchalc', 'beekai', 'seoul256' 'MountainDew' 'carvedwood' ]
+  let g:colorscheme_switcher_exclude = ['default', 'test']
+"colorscheme molokai
+
+
+" Start with random scheme
+autocmd VimEnter * RandomColorScheme
+
