@@ -1,32 +1,30 @@
 #!/bin/bash
 
+# The name of a package to be installed
+PACKAGE_NAME="ripgrep"
+
 # A list of configuration files that should be liked with .dotfiles repo
 CONFIGURATION_FILES=()
 
+# Imports
 source src/prettyecho
-# A check of whether current package is already installed in a system
-# Expected to success if package is installed of fail otherwise
+
+# A check of whether the current package is already installed in a system
+# Expected to succeed if a package is installed of fails otherwise
 already_installed() {
-  command -v jenv &> /dev/null
+  command -v rg &> /dev/null
 }
 
 # An installation process must be implemented here
 install() {
-  log_info "Installing $(bold jenv) ..."
-  brew install jenv
-  if grep 'jenv init -' ~/.zshrc &> /dev/null; then
-    log_info "Skipping. $(bold jenv) configuration already present in ~/.zshrc"
-  else
-    log_info "Adding $(bold jenv) configuration to ~/.zshrc"
-    echo 'export PATH="$HOME/.jenv/bin:$PATH"' >> ~/.zshrc
-    echo 'eval "$(jenv init -)"' >> ~/.zshrc
-  fi
+  log_info "Installing $(bold $PACKAGE_NAME) ..."
+  brew install ripgrep
 }
 
 # An uninstallation process should be implemented here
 uninstall() {
-  log_info "Uninstalling $(bold jenv) ..."
-  brew uninstall jenv
+  log_info "Uninstalling $(bold $PACKAGE_NAME) ..."
+  brew uninstall ripgrep
 }
 
 # Returns a list of configuration files that should be liked with .dotfiles repo

@@ -21,8 +21,9 @@ install() {
   if [ ! -f ~/.zshrc ]; then
     log_warning "~/.zshrc is not found and can't be updated"
   elif grep 'fortune | cowsay -f' ~/.zshrc &>/dev/null; then
-    log_warning "~/.zshrc is already updated"
+    log_info "~/.zshrc is already updated"
   else
+    log_info "Updating ~/.zshrc"
     echo '[ -x /usr/local/bin/cowsay -a -x /usr/local/bin/fortune -a -x /usr/local/bin/lolcat ] && \
     fortune | cowsay -f `cowsay -l | tail -n +2 | tr " " "\n" | perl -MList::Util=shuffle -e "print shuffle <STDIN>" | head -n1` | lolcat' >> ~/.zshrc
   fi

@@ -53,6 +53,9 @@ install() {
   # Copying customizable config file
   cp ~/.tmux/.tmux.conf.local ~/.tmux.conf.local
 
+  # Installing required plugins to enable system clipboard interaction
+  brew install reattach-to-user-namespace
+
 }
 
 # An uninstallation process should be implemented here
@@ -60,6 +63,8 @@ uninstall() {
   log_info "Uninstalling $(bold $PACKAGE_NAME) ..."
   rm -rf ~/.tmux.conf ~/.tmux.conf.local ~/.tmux
   brew uninstall tmux
+  brew uninstall reattach-to-user-namespace ||
+    log_info "Dependency $(bold reattach-to-user-namespace) is not installed"
 }
 
 # Returns a list of configuration files that should be liked with .dotfiles repo

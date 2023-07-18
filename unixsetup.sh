@@ -16,6 +16,8 @@ CANDIDATES=(
   oh-my-zsh
   oh-my-tmux
   vimrc
+  fasd
+  forcowlol
   jenv
 )
 

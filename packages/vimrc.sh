@@ -18,7 +18,12 @@ already_installed() {
 # An installation process must be implemented here
 install() {
   log_info "Installing $(bold $PACKAGE_NAME) ..."
+  brew install universal-ctags # dependency for tagbar plugin
   cp resources/vimrc ~/.vimrc
+  # Setting default editor - vim
+  if ! grep -E -i '^\s*export EDITOR=\W*vim\W*$' ~/.zshrc; then
+    echo "export EDITOR='vim'" >> ~/.zshrc
+  fi
 }
 
 # An uninstallation process should be implemented here
