@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # The name of a package to be installed
-PACKAGE_NAME='ripgrep'
-PACKAGE_CMD='rg'
+PACKAGE_NAME="trash"
 
 # A list of configuration files that should be liked with .dotfiles repo
 CONFIGURATION_FILES=()
@@ -13,19 +12,19 @@ source src/prettyecho
 # A check of whether the current package is already installed in a system
 # Expected to succeed if a package is installed of fails otherwise
 already_installed() {
-  command -v $PACKAGE_CMD &> /dev/null
+  command -v trash &> /dev/null
 }
 
 # An installation process must be implemented here
 install() {
   log_info "Installing $(bold $PACKAGE_NAME) ..."
-  brew install $PACKAGE_NAME
+  brew install trash
 }
 
 # An uninstallation process should be implemented here
 uninstall() {
   log_info "Uninstalling $(bold $PACKAGE_NAME) ..."
-  brew uninstall $PACKAGE_NAME
+  brew uninstall trash
 }
 
 # Returns a list of configuration files that should be liked with .dotfiles repo

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # The name of a package to be installed
-PACKAGE_NAME='ripgrep'
-PACKAGE_CMD='rg'
+PACKAGE_NAME='watch'
+PACKAGE_CMD=$PACKAGE_NAME
 
 # A list of configuration files that should be liked with .dotfiles repo
 CONFIGURATION_FILES=()

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # The name of a package to be installed
-PACKAGE_NAME='ripgrep'
-PACKAGE_CMD='rg'
+PACKAGE_NAME='cmd'  # TODO: replace with package name (`brew install <package-name>`)
+PACKAGE_CMD="$PACKAGE_NAME" # replace with package command if differs from name
 
 # A list of configuration files that should be liked with .dotfiles repo
 CONFIGURATION_FILES=()
