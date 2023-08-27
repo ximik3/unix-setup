@@ -1,34 +1,37 @@
 #!/bin/bash
 
+# The name of a package to be installed
+PACKAGE_NAME='gs-cli'
+
 # A list of configuration files that should be liked with .dotfiles repo
 CONFIGURATION_FILES=()
 
+# Imports
 source src/prettyecho
-# A check of whether current package is already installed in a system
-# Expected to success if package is installed of fail otherwise
+
+# A check of whether the current package is already installed in a system
+# Expected to succeed if a package is installed of fails otherwise
 already_installed() {
-  command -v jenv &> /dev/null
+  gsutil version &> /dev/null && exit || exit 1
 }
 
 # An installation process must be implemented here
 install() {
-  log_info "Installing $(bold jenv) ..."
-  brew install jenv
-  if grep 'jenv init -' ~/.zshrc &> /dev/null; then
-    log_info "Skipping. $(bold jenv) configuration already present in ~/.zshrc"
-  else
-    log_info "Adding $(bold jenv) configuration to ~/.zshrc"
-    echo 'export PATH="$HOME/.jenv/bin:$PATH"' >> ~/.zshrc
-    echo 'if command -v jenv &> /dev/null; then
-  eval "$(jenv init -)"
+  log_info "Installing $(bold $PACKAGE_NAME) ..."
+  brew install google-cloud-sdk
+  if ! grep 'google-cloud-sdk' ~/.zshrc &> /dev/null; then
+    echo 'source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"'
+    echo 'if command -v gsutil &> /dev/null; then
+  source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+  source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 fi' >> ~/.zshrc
   fi
 }
 
 # An uninstallation process should be implemented here
 uninstall() {
-  log_info "Uninstalling $(bold jenv) ..."
-  brew uninstall jenv
+  log_info "Uninstalling $(bold $PACKAGE_NAME) ..."
+  brew uninstall google-cloud-sdk
 }
 
 # Returns a list of configuration files that should be liked with .dotfiles repo
